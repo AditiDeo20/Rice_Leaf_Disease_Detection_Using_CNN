@@ -1,89 +1,52 @@
-# 🌾 Rice Leaf Disease Classification with Deep Learning
+# 🌾 Rice Leaf Disease Detection using Deep Learning
 
-This project develops and evaluates a **Convolutional Neural Network (CNN)** model to classify rice leaf diseases using image data. The goal is to assist farmers and agricultural experts in **early and accurate detection** of rice diseases, helping prevent crop loss.
+## **Project Overview**
 
----
+This project detects **three rice leaf diseases** using image classification:
 
-## 📌 Problem Statement
-
-Rice plants are prone to various diseases that can significantly reduce yield. **Manual detection is time-consuming and error-prone**, especially at early stages when symptoms are subtle. This project uses deep learning to automatically classify rice leaf images into:
-
-- **Bacterial Leaf Blight**
 - **Brown Spot**
 - **Leaf Smut**
+- **Bacterial Leaf Blight**
+
+We compare a **Custom CNN model** with **MobileNetV2 Transfer Learning** for classification.
 
 ---
 
-## 🗂️ Dataset
+## **Dataset**
 
-Due to size and licensing constraints, the dataset is **not included in this repository**.  
-You can download it from:  
-https://d3ilbtxij3aepc.cloudfront.net/projects/CDS-Capstone-Projects/PRCP-1001-RiceLeaf.zip
-
----
-
-## 🎯 Objectives
-
-- Analyze and preprocess rice leaf images  
-- Build a **CNN-based classifier**  
-- Evaluate model performance on real-world disease images  
-- Support early-stage disease detection for farmers and researchers  
+- **Source:** [Rice Leaf Disease Dataset](https://d3ilbtxij3aepc.cloudfront.net/projects/CDS-Capstone-Projects/PRCP-1001-RiceLeaf.zip)
+- **Classes:**  
+  - Brown Spot  
+  - Leaf Smut  
+  - Bacterial Leaf Blight
 
 ---
 
-## 🧪 Model Used
+## **Model Comparison**
 
-- **Convolutional Neural Network (CNN)**  
-*(Built using TensorFlow / Keras)*
-
----
-
-## 📊 Evaluation Metrics
-
-- ✅ **Accuracy**  
-- 📉 **Confusion Matrix**  
-- 🧠 **Precision, Recall, F1-Score**
+| Method                       | Train Accuracy | Validation Accuracy | Test Accuracy | Test Loss |
+|-----------------------------|----------------|---------------------|---------------|-----------|
+| **Custom CNN**               | 72.63%         | 66.67%               | 73.68%        | 0.7235    |
+| **Transfer Learning (MobileNetV2)** | 86.32%   | 83.33%               | 73.68%        | 0.7235    |
 
 ---
 
-## 🧰 Tech Stack
+## **Key Observations**
 
-- **Python:** TensorFlow, Keras, NumPy, OpenCV  
-- **Visualization:** Matplotlib, Seaborn  
-- **Environment:** Jupyter Notebook
-
----
-
-## 📊 Model Accuracy and Evaluation
-
-The model classifies rice leaf images into **3 disease categories**:
-
-| Metric | Value |
-|---------|-------|
-| **Training Accuracy** | 98.7% |
-| **Validation Accuracy** | 95.3% |
-| **Test Accuracy** | 94.8% |
-| **Test Loss** | 0.19 |
-
+- **Transfer Learning** improved **training and validation accuracy significantly.**
+- **Test accuracy remained the same**, suggesting dataset size limitations or subtle class similarities.
+- Further improvements can include:
+  - Fine-tuning more layers of MobileNetV2
+  - Collecting more data
+  - Using ensemble models
 
 ---
 
-## 📈 Future Work
+## **Project Pipeline**
 
-- Apply data augmentation for improved generalization  
-- Deploy the model via **Streamlit** or **Flask API**  
-- Extend the model to detect additional plant diseases
+1. **Data Preparation**
+   - Dataset split into **Train/Validation/Test (70/15/15)** using `split-folders`
+   - Image size: **224×224**
 
----
-
-## 🤝 Contributions
-
-Feel free to fork this project and submit pull requests. Contributions are welcome!
-
----
-
-## 📬 Contact
-
-**Aditi Deo**  
-GitHub: [AditiDeo20](https://github.com/AditiDeo20)
-
+2. **Models Built**
+   - **Custom CNN**

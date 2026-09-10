@@ -41,12 +41,14 @@ venv.bak/
 # Datasets and temporary runtime directories
 dataset_split/
 raw_data/
+temp_*/
+scratch_*/
 temp_extract/
 *.zip
 
-# Model checkpoints and weights >100MB (keep directory via .gitkeep)
-models/*.keras
-models/*.h5
+# Model checkpoints and binaries (>100MB GitHub limit protection)
+*.keras
+*.h5
 !models/.gitkeep
 
 # IDE and OS artifacts

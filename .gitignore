@@ -44,12 +44,11 @@ raw_data/
 temp_*/
 scratch_*/
 temp_extract/
-*.zip
 
 # Model checkpoints and binaries (>100MB GitHub limit protection)
-*.keras
 *.h5
-!models/.gitkeep
+*.keras
+models/
 
 # IDE and OS artifacts
 .vscode/

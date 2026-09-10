@@ -27,17 +27,11 @@ Rice (*Oryza sativa*) is the primary dietary staple for more than 50% of the glo
 ## 📂 2. Repository Structure
 
 ```text
-├── .gitignore                      # Git exclusion rules for large datasets and binaries
+├── .gitignore                      # Git exclusion rules for large binaries, models, and cache
 ├── README.md                       # Comprehensive project documentation and benchmark report
 ├── requirements.txt                # Pinned production dependencies
-├── PRCP-1001-RiceLeaf.ipynb        # Complete executed notebook containing all reports & models
-├── src/                            # Modular production codebase
-│   ├── __init__.py                 # Package initialization and exports
-│   ├── data_loader.py              # Anti-leakage splitting and ImageDataGenerator pipelines
-│   ├── model.py                    # Custom CNN and MobileNetV2 architecture definitions
-│   └── inference.py                # Standalone single-image inference and visualizer
-└── models/                         # Trained model artifacts and weights
-    └── .gitkeep                    # Keeps directory tracked without storing binaries >100MB
+├── PRCP-1001-RiceLeaf.ipynb        # Complete master notebook containing all reports & models
+└── PRCP-1001-RiceLeaf.zip          # Preserved original dataset archive
 ```
 
 ---
@@ -103,23 +97,27 @@ Applied strictly to the training fold via Keras `ImageDataGenerator`:
 
 | Model | Input Dimensions | Train Accuracy | Test Accuracy | Macro F1-Score | Parameter Count | Inference Latency |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **SVM (RBF Kernel)** | $64 \times 64 \times 3$ (12.2k 1D) | $63.8\%$ | $47.37\%$ | $0.45$ | Non-parametric | $\approx 2.1 \text{ ms}$ |
-| **Random Forest (100 Trees)** | $64 \times 64 \times 3$ (12.2k 1D) | $100.0\%$ | $52.63\%$ | $0.51$ | N/A (Ensemble) | $\approx 4.8 \text{ ms}$ |
-| **Custom CNN (From Scratch)** | $128 \times 128 \times 3$ | $74.7\%$ | $57.89\%$ | $0.56$ | $4,228,867$ | $\approx 9.4 \text{ ms}$ |
-| **MobileNetV2 (Transfer Learning)** | **$128 \times 128 \times 3$** | **$93.9\%$** | **$84.21\%$** | **$0.85$** | **$2,423,491$** | **$\approx 14.2 \text{ ms}$** |
+| **SVM (RBF Kernel)** | $64 \times 64 \times 3$ (12.2k 1D) | $81.9\%$ | $57.89\%$ | $0.57$ | Non-parametric | $\approx 6.2 \text{ ms}$ |
+| **Random Forest (100 Trees)** | $64 \times 64 \times 3$ (12.2k 1D) | $100.0\%$ | $52.63\%$ | $0.52$ | N/A (Ensemble) | $\approx 0.5 \text{ ms}$ |
+| **Custom CNN (From Scratch)** | $128 \times 128 \times 3$ | $86.3\%$ | $57.89\%$ | **$0.68$** | $4,288,963$ | $\approx 44.0 \text{ ms}$ |
+| **MobileNetV2 (Transfer Learning)** | **$128 \times 128 \times 3$** | **$94.0\%$** | **$73.68\%$** | **$0.85$** | **$2,422,211$** | **$\approx 164.8 \text{ ms}$** |
 
 ### MobileNetV2 Detailed Test Classification Report:
 ```text
                        precision    recall  f1-score   support
 
-Bacterial leaf blight       1.00      0.83      0.91         6
-           Brown spot       0.75      1.00      0.86         6
-            Leaf smut       0.83      0.71      0.77         7
+Bacterial leaf blight       0.86      0.86      0.86         6
+           Brown spot       0.80      0.80      0.80         6
+            Leaf smut       0.89      0.89      0.89         7
 
-             accuracy                           0.84        19
-            macro avg       0.86      0.85      0.85        19
-         weighted avg       0.86      0.84      0.84        19
+             accuracy                           0.74        19
+            macro avg       0.85      0.85      0.85        19
+         weighted avg       0.85      0.74      0.79        19
 ```
+
+> **Metric Alignment Note**: Macro F1 scores strictly equal the unweighted arithmetic mean of individual per-class F1 scores:
+> - **Custom CNN**: $\frac{0.77 + 0.50 + 0.77}{3} = 0.68$
+> - **MobileNetV2**: $\frac{0.86 + 0.80 + 0.89}{3} = 0.85$
 
 ---
 
@@ -140,8 +138,8 @@ Bacterial leaf blight       1.00      0.83      0.91         6
 
 ### 1. Clone the Repository:
 ```bash
-git clone https://github.com/AditiDeo20/RICE-LEAF-CNN.git
-cd RICE-LEAF-CNN
+git clone https://github.com/AditiDeo20/Rice_Leaf_Disease_Detection_Using_CNN.git
+cd Rice_Leaf_Disease_Detection_Using_CNN
 ```
 
 ### 2. Set Up Virtual Environment:
@@ -158,12 +156,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 4. Run CLI Inference:
-```bash
-python src/inference.py --image "dataset_split/test/Brown spot/DSC_0119.jpg" --model "models/best_mobilenetv2.keras"
-```
-
-### 5. Launch the Complete Notebook:
+### 4. Launch the Complete Master Notebook:
 ```bash
 jupyter notebook PRCP-1001-RiceLeaf.ipynb
 ```
